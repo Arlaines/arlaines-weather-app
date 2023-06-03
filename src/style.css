@@ -1,0 +1,90 @@
+body {
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+  background-color: black;
+}
+.background-card {
+  background: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
+  margin-top: 30px;
+  padding-top: 25px;
+}
+.input-group
+  > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+    .valid-feedback
+  ):not(.invalid-tooltip):not(.invalid-feedback) {
+  margin-left: calc(var(--bs-border-width) * 0);
+}
+.magnifying-glass {
+  color: rgb(98, 100, 101);
+}
+.enter-btn {
+  padding: 6px 20px;
+  color: white;
+}
+.current-btn {
+  padding: 6px 20px;
+  color: white;
+  background-color: rgb(20, 156, 106);
+}
+h1,
+h2,
+h3 {
+  color: white;
+}
+h1 {
+  margin: 15px 0 15px;
+  font-size: 40px;
+  font-weight: 700;
+}
+h2 {
+  font-size: 20px;
+}
+h3 {
+  font-size: 60px;
+}
+.degree-symbol {
+  font-weight: 500;
+}
+.c-f {
+  font-size: 40px;
+}
+.c-f-button {
+  color: #afafaf;
+  font-size: 30px;
+  font-weight: 200;
+  padding-bottom: 0;
+  position: relative;
+  top: 2px;
+}
+p.feels-like {
+  color: white;
+}
+.weather-now-factors {
+  font-size: 14px;
+  color: #afafaf;
+}
+.feature-picture {
+  color: yellow;
+  font-size: 120px;
+}
+.objective-description {
+  font-size: 30px;
+}
+.rain-icon {
+  color: blue;
+}
+.sun-cloud-icon {
+  color: yellow;
+}
+.lightning-icon {
+  color: blue;
+}
+.sun-rain-icon {
+  color: yellow;
+}
+.snow-icon {
+  color: white;
+}
+.sun-icon {
+  color: yellow;
+}
