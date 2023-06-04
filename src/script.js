@@ -30,23 +30,6 @@ function fetchInfo(city) {
   axios.get(`${apiUrl}&appid=${apiKey}`).then(showRealLiveTemp);
 }
 
-function updateCityName(event) {
-  event.preventDefault();
-  let searchInput = document.querySelector("#inlineFormInput");
-  let city = document.querySelector("#searched-for-city");
-  searchInput.value = searchInput.value.trim();
-  searchInput.value = searchInput.value.toLowerCase();
-  //for cities with two words:
-  let cityName = searchInput.value.split(" ");
-  //turns each word into an array
-  for (let firstLetter = 0; firstLetter < cityName.length; firstLetter++) {
-    cityName[firstLetter] =
-      cityName[firstLetter][0].toUpperCase() + cityName[firstLetter].substr(1);
-    //capitalizes the first letter of each in the array
-  }
-  city.innerHTML = `${cityName.join(" ")}`;
-}
-
 function makeARequest(event) {
   event.preventDefault();
   let city = document.querySelector("#inlineFormInput").value;
@@ -131,7 +114,6 @@ let tempMeasure = document.querySelector("#toggle-temp");
 tempMeasure.addEventListener("click", toggleDegreeScale);
 
 let searchForm = document.querySelector("#search-form");
-//searchForm.addEventListener("submit", updateCityName);
 searchForm.addEventListener("submit", makeARequest);
 
 let currentLocation = document.querySelector("#current-button");
