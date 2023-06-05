@@ -88,3 +88,10 @@ p.feels-like {
 .sun-icon {
   color: yellow;
 }
+.code-source-link {
+  text-decoration: none;
+}
+.credentials {
+  margin-top: 20px;
+  color: rgb(12, 12, 118);
+}
