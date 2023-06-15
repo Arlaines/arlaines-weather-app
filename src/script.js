@@ -37,39 +37,6 @@ function makeARequest(event) {
   fetchInfo(city);
 }
 
-function toggleDegreeScale() {
-  let tempValue = document.querySelector("h3");
-  let tempElement = document.querySelector("#actual-temp");
-  let numericalValue = tempElement.innerHTML;
-
-  let feelsLikeElement = document.querySelector("#feels-like-temp");
-  let numericalFeelsLikeValue = feelsLikeElement.innerHTML;
-
-  let toggleButton = document.querySelector("#toggle-temp");
-  let degreeChange = document.querySelector(".celsius-fahrenheit");
-  if (tempValue.classList.contains("celsius")) {
-    tempValue.classList.remove("celsius");
-    tempValue.classList.add("fahrenheit");
-    tempElement.innerHTML = Math.round((numericalValue * 9) / 5 + 32);
-    feelsLikeElement.innerHTML = Math.round(
-      (numericalFeelsLikeValue * 9) / 5 + 32
-    );
-    degreeChange.innerHTML = "°f";
-    toggleButton.innerHTML = "| °c";
-  } else {
-    tempValue.classList.remove("fahrenheit");
-    tempValue.classList.add("celsius");
-    let fahrenheitValue = tempElement.innerHTML;
-    let fahrenheitFeelsLikeValue = feelsLikeElement.innerHTML;
-    tempElement.innerHTML = Math.round(((fahrenheitValue - 32) * 5) / 9);
-    feelsLikeElement.innerHTML = Math.round(
-      ((fahrenheitFeelsLikeValue - 32) * 5) / 9
-    );
-    degreeChange.innerHTML = "°c";
-    toggleButton.innerHTML = "| °f";
-  }
-}
-
 function showRealLiveTemp(response) {
   console.log(response.data.name);
   console.log(response.data);
@@ -99,6 +66,35 @@ function showRealLiveTemp(response) {
   document
     .querySelector("#icon")
     .setAttribute("alt", response.data.weather[0].description);
+  celsiusTemp = Math.round(response.data.main.temp);
+  feelsLikeTemp = response.data.main.feels_like;
+}
+
+function changeDegrees() {
+  let tempValue = document.querySelector("h3");
+  let tempElement = document.querySelector("#actual-temp");
+  let feelsLikeElement = document.querySelector("#feels-like-temp");
+  let toggleButton = document.querySelector("#toggle-temp");
+  let degreeChange = document.querySelector(".celsius-fahrenheit");
+  if (tempValue.classList.contains("celsius")) {
+    tempValue.classList.remove("celsius");
+    tempValue.classList.add("fahrenheit");
+    tempElement.innerHTML = Math.round((celsiusTemp * 9) / 5 + 32);
+    feelsLikeElement.innerHTML = Math.round((feelsLikeTemp * 9) / 5 + 32);
+    degreeChange.innerHTML = "°f";
+    toggleButton.innerHTML = "| °c";
+  } else {
+    tempValue.classList.remove("fahrenheit");
+    tempValue.classList.add("celsius");
+    let fahrenheitValue = tempElement.innerHTML;
+    let fahrenheitFeelsLikeValue = feelsLikeElement.innerHTML;
+    tempElement.innerHTML = Math.round(((fahrenheitValue - 32) * 5) / 9);
+    feelsLikeElement.innerHTML = Math.round(
+      ((fahrenheitFeelsLikeValue - 32) * 5) / 9
+    );
+    degreeChange.innerHTML = "°c";
+    toggleButton.innerHTML = "| °f";
+  }
 }
 
 function showPosition(position) {
@@ -120,8 +116,12 @@ currentDate(now);
 
 fetchInfo("Toronto");
 
+let celsiusTemp = null;
+
+let feelsLikeTemp = null;
+
 let tempMeasure = document.querySelector("#toggle-temp");
-tempMeasure.addEventListener("click", toggleDegreeScale);
+tempMeasure.addEventListener("click", changeDegrees);
 
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", makeARequest);
