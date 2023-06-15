@@ -69,6 +69,7 @@ p.feels-like {
 }
 .objective-description {
   font-size: 30px;
+  text-transform: capitalize;
 }
 .rain-icon {
   color: blue;
