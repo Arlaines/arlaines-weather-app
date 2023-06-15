@@ -118,3 +118,5 @@ searchForm.addEventListener("submit", makeARequest);
 
 let currentLocation = document.querySelector("#current-button");
 currentLocation.addEventListener("click", requestCurrentLocation);
+
+console.log(response.data);
