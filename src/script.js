@@ -73,6 +73,7 @@ function toggleDegreeScale() {
 function showRealLiveTemp(response) {
   console.log(response.data.name);
   console.log(response.data);
+
   document.querySelector("#searched-for-city").innerHTML = response.data.name;
   document.querySelector("#actual-temp").innerHTML = Math.round(
     response.data.main.temp
@@ -89,6 +90,15 @@ function showRealLiveTemp(response) {
   );
   document.querySelector("#weather-description").innerHTML =
     response.data.weather[0].description;
+  document
+    .querySelector("#icon")
+    .setAttribute(
+      "src",
+      `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    );
+  document
+    .querySelector("#icon")
+    .setAttribute("alt", response.data.weather[0].description);
 }
 
 function showPosition(position) {
