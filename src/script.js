@@ -37,6 +37,31 @@ function makeARequest(event) {
   fetchInfo(city);
 }
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+  let days = ["Thur", "Fri", "Sat", "Sun", "Mon"];
+  let forecastHTML = `<div class="row day-cards">`;
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div
+                class="card col-2 m-2 bg-white bg-opacity-50 border-0"
+                style="width: 10rem"
+              >
+                <div class="card-body text-white">
+                  <h5 class="card-title">${day}</h5>
+                  <p class="card-text">
+                    <i class="fa-solid fa-cloud-sun-rain rain-icon"></i>
+                  </p>
+                  <h5>20&deg; /<span> 10&deg;</span></h5>
+                </div>
+              </div>`;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastElement.innerHTML = forecastHTML;
+}
+
 function showRealLiveTemp(response) {
   console.log(response.data.name);
   console.log(response.data);
@@ -115,6 +140,8 @@ let now = new Date();
 currentDate(now);
 
 fetchInfo("Toronto");
+
+displayForecast();
 
 let celsiusTemp = null;
 
