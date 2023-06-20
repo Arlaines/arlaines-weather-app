@@ -37,31 +37,53 @@ function makeARequest(event) {
   fetchInfo(city);
 }
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[day];
+}
+
 function display5DayForecast(response) {
   console.log(response);
   console.log(response.data.daily);
+  let dailyForecastData = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
-  let days = ["Thur", "Fri", "Sat", "Sun", "Mon"];
+
   let forecastHTML = `<div class="row day-cards">`;
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `<div
+  dailyForecastData.forEach(function (day, index) {
+    if (index < 6 && index > 0) {
+      forecastHTML =
+        forecastHTML +
+        `<div
                 class="card col-2 m-2 bg-white bg-opacity-50 border-0"
                 style="width: 10rem"
               >
                 <div class="card-body text-white">
-                  <h5 class="card-title">${day}</h5>
+                  <h5 class="card-title">${formatDay(day.dt)}</h5>
                   <p class="card-text">
-                    <i class="fa-solid fa-cloud-sun-rain rain-icon"></i>
+                    <img src="https://openweathermap.org/img/wn/${
+                      day.weather[0].icon
+                    }@2x.png"
+                    alt=""
+                    width="42"/>
                   </p>
-                  <h5>20&deg; /<span> 10&deg;</span></h5>
+                  <h5><span class="max-forecast-temp">${Math.round(
+                    day.temp.max
+                  )}</span>&deg; /<span class="min-forecast-temp"> ${Math.round(
+          day.temp.min
+        )}</span>&deg;</h5>
                 </div>
               </div>`;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+  document.querySelector("#precipitation-now").innerHTML = Math.round(
+    dailyForecastData[0].pop
+  );
+  console.log(dailyForecastData[0].pop);
 }
 
 function accessForecastData(coordinates) {
@@ -83,7 +105,7 @@ function showRealLiveTemp(response) {
   document.querySelector("#feels-like-temp").innerHTML = Math.round(
     response.data.main.feels_like
   );
-  //document.querySelector("#precipitation-now").innerHTML = Math.round();
+
   document.querySelector("#humidity-now").innerHTML = Math.round(
     response.data.main.humidity
   );
