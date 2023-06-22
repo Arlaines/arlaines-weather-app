@@ -1,3 +1,11 @@
+function nightTimeTheme(hour) {
+  let backgroundCard = document.querySelector("#background-colour");
+  if (hour > 18) {
+    backgroundCard.classList.remove("background-card");
+    backgroundCard.classList.add("night-background-card");
+  }
+}
+
 function currentDate(now) {
   let weekdays = [
     "Sunday",
@@ -21,6 +29,8 @@ function currentDate(now) {
 
   let formattedCurrentDate = `${currentWeekday} ${currentHour}:${currentMinutes}`;
   currentTime.innerHTML = formattedCurrentDate;
+
+  nightTimeTheme(currentHour);
 }
 
 function formatDay(timestamp) {
@@ -128,7 +138,9 @@ function changeDegrees() {
   let tempValue = document.querySelector("h3");
   let tempElement = document.querySelector("#actual-temp");
   celsiusTemp = tempElement.innerHTML;
+
   let feelsLikeElement = document.querySelector("#feels-like-temp");
+  feelsLikeTemp = feelsLikeElement.innerHTML;
   let toggleButton = document.querySelector("#toggle-temp");
   let degreeChange = document.querySelector(".celsius-fahrenheit");
 
