@@ -43,7 +43,7 @@ function display5DayForecast(response) {
         `<div
                 class="card col-2 m-2 bg-white bg-opacity-50 border-0"
                 style="width: 10rem"
-              >?
+              >
                 <div class="card-body text-white">
                   <h5 class="card-title">${formatDay(day.time)}</h5>
                   <p class="card-text">
