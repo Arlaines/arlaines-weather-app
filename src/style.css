@@ -70,13 +70,17 @@ p.feels-like {
   color: #afafaf;
 }
 .feature-picture {
-  color: yellow;
   font-size: 120px;
+}
+
+#icon {
+  margin-top: 20px;
 }
 
 .objective-description {
   font-size: 30px;
   text-transform: capitalize;
+  margin-top: 2px;
 }
 
 .code-source-link {
