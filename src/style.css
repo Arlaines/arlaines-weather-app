@@ -1,7 +1,8 @@
 body {
   font-family: "Poppins", sans-serif;
-  width: 100%;
+  max-width: 1090px;
   background-color: black;
+  margin: 0 auto;
 }
 .background-card {
   background: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
