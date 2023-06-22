@@ -127,9 +127,11 @@ function displayCityAndTemp(response) {
 function changeDegrees() {
   let tempValue = document.querySelector("h3");
   let tempElement = document.querySelector("#actual-temp");
+  celsiusTemp = tempElement.innerHTML;
   let feelsLikeElement = document.querySelector("#feels-like-temp");
   let toggleButton = document.querySelector("#toggle-temp");
   let degreeChange = document.querySelector(".celsius-fahrenheit");
+
   if (tempValue.classList.contains("celsius")) {
     tempValue.classList.remove("celsius");
     tempValue.classList.add("fahrenheit");
