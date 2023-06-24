@@ -1,12 +1,25 @@
 function nightTimeTheme(hour) {
+  console.log(hour);
   let backgroundCard = document.querySelector("#background-colour");
   if (hour > 18) {
     backgroundCard.classList.remove("background-card");
     backgroundCard.classList.add("night-background-card");
+  } else {
+    backgroundCard.classList.remove("night-background-card");
+    backgroundCard.classList.add("background-card");
   }
 }
 
-function currentDate(now) {
+function currentTimeZone(timeZoneData) {
+  let timeZoneMS = timeZoneData * 1000;
+  console.log(timeZoneMS);
+
+  let ABC = new Date();
+
+  let currentTimeMS = document.querySelector("#current-time");
+  currentTimeMS = ABC.getTime();
+  let requestedCityTime = new Date(currentTimeMS + timeZoneMS);
+  console.log(requestedCityTime);
   let weekdays = [
     "Sunday",
     "Monday",
@@ -16,19 +29,20 @@ function currentDate(now) {
     "Friday",
     "Saturday",
   ];
-  let currentTime = document.querySelector("#current-time");
-  let currentWeekday = weekdays[now.getDay()];
-  let currentHour = now.getHours();
+  let timeOfTimezone = document.querySelector("#current-time");
+  let currentWeekday = weekdays[requestedCityTime.getUTCDay()];
+  let currentHour = requestedCityTime.getUTCHours();
   if (currentHour < 10) {
     currentHour = `0${currentHour}`;
   }
-  let currentMinutes = now.getMinutes();
+  let currentMinutes = requestedCityTime.getUTCMinutes();
   if (currentMinutes < 10) {
     currentMinutes = `0${currentMinutes}`;
   }
 
   let formattedCurrentDate = `${currentWeekday} ${currentHour}:${currentMinutes}`;
-  currentTime.innerHTML = formattedCurrentDate;
+  timeOfTimezone.innerHTML = formattedCurrentDate;
+  console.log(formattedCurrentDate);
 
   nightTimeTheme(currentHour);
 }
@@ -83,6 +97,9 @@ function displayPrecipitation(response) {
     response.data.daily[0].pop
   );
   console.log(response.data.daily[0].pop);
+  let timeZoneData = response.data.timezone_offset;
+  console.log(response.data.timezone_offset);
+  currentTimeZone(timeZoneData);
 }
 
 function makeARequestForPrecipitation(coordinates) {
@@ -193,8 +210,6 @@ function makeARequestByCurrentLocation(event) {
   navigator.geolocation.getCurrentPosition(accessCurrentLocation);
 }
 let now = new Date();
-
-currentDate(now);
 
 accessCityData("Toronto");
 
