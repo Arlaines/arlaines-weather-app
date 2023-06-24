@@ -1,7 +1,6 @@
 function nightTimeTheme(hour) {
-  console.log(hour);
   let backgroundCard = document.querySelector("#background-colour");
-  if (hour > 18) {
+  if (hour > 18 || hour < 6) {
     backgroundCard.classList.remove("background-card");
     backgroundCard.classList.add("night-background-card");
   } else {
@@ -12,12 +11,8 @@ function nightTimeTheme(hour) {
 
 function currentTimeZone(timeZoneData) {
   let timeZoneMS = timeZoneData * 1000;
-  console.log(timeZoneMS);
-
-  let ABC = new Date();
-
   let currentTimeMS = document.querySelector("#current-time");
-  currentTimeMS = ABC.getTime();
+  currentTimeMS = new Date().getTime();
   let requestedCityTime = new Date(currentTimeMS + timeZoneMS);
   console.log(requestedCityTime);
   let weekdays = [
@@ -42,7 +37,6 @@ function currentTimeZone(timeZoneData) {
 
   let formattedCurrentDate = `${currentWeekday} ${currentHour}:${currentMinutes}`;
   timeOfTimezone.innerHTML = formattedCurrentDate;
-  console.log(formattedCurrentDate);
 
   nightTimeTheme(currentHour);
 }
@@ -54,8 +48,7 @@ function formatDay(timestamp) {
   return days[day];
 }
 
-function display5DayForecast(response) {
-  console.log(response);
+function display6DayForecast(response) {
   let dailyForecastData = response.data.daily;
   let forecastElement = document.querySelector("#forecast");
 
@@ -92,39 +85,41 @@ function display5DayForecast(response) {
 }
 
 function displayPrecipitation(response) {
-  console.log(response.data);
   document.querySelector("#precipitation-now").innerHTML = Math.round(
     response.data.daily[0].pop
   );
   console.log(response.data.daily[0].pop);
   let timeZoneData = response.data.timezone_offset;
-  console.log(response.data.timezone_offset);
   currentTimeZone(timeZoneData);
 }
 
 function makeARequestForPrecipitation(coordinates) {
-  console.log(coordinates);
   let lat = coordinates.latitude;
   let lon = coordinates.longitude;
   let secondApiKey = "6643c7326a4c2a38838264a28531d97e";
-  let secondApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${secondApiKey}&units=metri`;
-  console.log(secondApiUrl);
+  let secondApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${secondApiKey}&units=metric`;
   axios.get(`${secondApiUrl}`).then(displayPrecipitation);
 }
 
 function accessForecastData(city) {
-  console.log(city);
-
   let apiKey = "3e0db7t6452048a494f7aaaef11f5o6b";
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
-  console.log(apiUrl);
-  axios.get(apiUrl).then(display5DayForecast);
+  axios.get(apiUrl).then(display6DayForecast);
+}
+
+function alwaysBeginWithCelsius() {
+  if (tempValue.classList.contains("fahrenheit")) {
+    tempValue.classList.remove("fahrenheit");
+    tempValue.classList.add("celsius");
+    degreeChange.innerHTML = "°c";
+    toggleButton.innerHTML = "| °f";
+  }
 }
 
 function displayCityAndTemp(response) {
-  console.log(response.data);
-
+  alwaysBeginWithCelsius();
   document.querySelector("#searched-for-city").innerHTML = response.data.city;
+  document.querySelector("#country").innerHTML = response.data.country;
   document.querySelector("#actual-temp").innerHTML = Math.round(
     response.data.temperature.current
   );
@@ -152,14 +147,11 @@ function displayCityAndTemp(response) {
 }
 
 function changeDegrees() {
-  let tempValue = document.querySelector("h3");
   let tempElement = document.querySelector("#actual-temp");
   celsiusTemp = tempElement.innerHTML;
 
   let feelsLikeElement = document.querySelector("#feels-like-temp");
   feelsLikeTemp = feelsLikeElement.innerHTML;
-  let toggleButton = document.querySelector("#toggle-temp");
-  let degreeChange = document.querySelector(".celsius-fahrenheit");
 
   if (tempValue.classList.contains("celsius")) {
     tempValue.classList.remove("celsius");
@@ -185,7 +177,6 @@ function changeDegrees() {
 function accessCityData(city) {
   let apiKey = "3e0db7t6452048a494f7aaaef11f5o6b";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
-
   axios.get(`${apiUrl}`).then(displayCityAndTemp);
 }
 
@@ -210,6 +201,11 @@ function makeARequestByCurrentLocation(event) {
   navigator.geolocation.getCurrentPosition(accessCurrentLocation);
 }
 let now = new Date();
+
+let tempValue = document.querySelector("h3");
+
+let toggleButton = document.querySelector("#toggle-temp");
+let degreeChange = document.querySelector(".celsius-fahrenheit");
 
 accessCityData("Toronto");
 
