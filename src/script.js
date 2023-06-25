@@ -85,9 +85,9 @@ function display6DayForecast(response) {
 }
 
 function displayPrecipitation(response) {
-  document.querySelector("#precipitation-now").innerHTML = Math.round(
-    response.data.daily[0].pop
-  );
+  console.log(response);
+  document.querySelector("#precipitation-now").innerHTML =
+    response.data.daily[0].pop * 100;
   console.log(response.data.daily[0].pop);
   let timeZoneData = response.data.timezone_offset;
   currentTimeZone(timeZoneData);
